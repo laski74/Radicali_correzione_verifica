@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Correzione Verifica Radicali - Fila A / Fila B</title>
+
+  <!-- MathJax config: usa $...$ inline e $$...$$ display -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root{
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --ink: #1f2a37;
+      --muted: #52606d;
+      --accent: #7aa6b2;
+      --accent2:#9bbf9b;
+      --warn: #d3a26a;
+      --soft: #eef3f6;
+      --soft2:#f2f7f2;
+      --border:#e5e7eb;
+      --shadow: 0 8px 24px rgba(31,42,55,0.08);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background: radial-gradient(1000px 600px at 10% 0%, #eaf2f6 0%, var(--bg) 55%),
+                  radial-gradient(900px 500px at 90% 10%, #edf6ed 0%, var(--bg) 55%);
+    }
+    header{
+      padding: 28px 18px 12px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .title{
+      background: linear-gradient(90deg, rgba(122,166,178,0.18), rgba(155,191,155,0.18));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 18px;
+      box-shadow: var(--shadow);
+    }
+    h1{
+      margin:0 0 6px;
+      font-size: 1.35rem;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.4;
+      font-size: .98rem;
+    }
+
+    main{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 18px 40px;
+    }
+
+    /* Tabs */
+    .tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      margin: 16px 0 14px;
+    }
+    .tab-btn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,0.7);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      color: var(--ink);
+      font-weight: 650;
+      transition: .2s;
+      box-shadow: 0 6px 18px rgba(31,42,55,0.06);
+    }
+    .tab-btn:hover{ transform: translateY(-1px); }
+    .tab-btn[aria-selected="true"]{
+      background: linear-gradient(90deg, rgba(122,166,178,0.35), rgba(155,191,155,0.35));
+      border-color: rgba(122,166,178,0.55);
+    }
+
+    .tab-panel{ display:none; }
+    .tab-panel.active{ display:block; }
+
+    /* Cards / sections */
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin: 14px 0;
+    }
+    .card h2{
+      margin: 2px 0 10px;
+      font-size: 1.18rem;
+    }
+    .note{
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: .96rem;
+    }
+
+    /* Exercise block */
+    .ex{
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(238,243,246,0.55), rgba(255,255,255,0.85));
+      margin: 12px 0;
+    }
+    .ex-head{
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .ex-title{
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .badge{
+      font-size: .82rem;
+      color: var(--muted);
+      background: rgba(122,166,178,0.12);
+      border: 1px solid rgba(122,166,178,0.25);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .ex-text{
+      color: var(--ink);
+      line-height: 1.5;
+      margin: 8px 0 10px;
+    }
+
+    /* Details accordion */
+    details{
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.9);
+      margin: 8px 0;
+    }
+    summary{
+      cursor:pointer;
+      font-weight: 750;
+      color: var(--ink);
+      list-style: none;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .pill{
+      font-size:.78rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      color: var(--muted);
+      background: #fafafa;
+      white-space: nowrap;
+    }
+    .content{
+      padding: 10px 2px 2px;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    .content ul{ margin: 8px 0 0 18px; }
+    .content li{ margin: 6px 0; }
+    .step{
+      background: var(--soft2);
+      border: 1px solid #dbe7db;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 8px 0;
+    }
+    .warn{
+      background: rgba(211,162,106,0.14);
+      border: 1px solid rgba(211,162,106,0.35);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 8px 0;
+    }
+    .theory{
+      background: rgba(122,166,178,0.10);
+      border: 1px solid rgba(122,166,178,0.28);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 8px 0;
+    }
+
+    /* Summary table */
+    table{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,0.92);
+    }
+    th, td{
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      text-align:left;
+    }
+    th{
+      background: linear-gradient(90deg, rgba(122,166,178,0.20), rgba(155,191,155,0.20));
+      font-weight: 800;
+    }
+    tr:last-child td{ border-bottom:none; }
+    .small{ font-size:.94rem; color: var(--muted); }
+
+    footer{
+      max-width:1100px;
+      margin: 0 auto;
+      padding: 6px 18px 26px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    /* Print friendly */
+    @media print{
+      .tabs{ display:none; }
+      details{ break-inside: avoid; }
+      .card, .ex{ box-shadow:none; }
+      body{ background:#fff; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="title">
+    <h1>Correzione guidata — Verifica sui Radicali (Fila A / Fila B)</h1>
+    <p class="subtitle">
+      Uso consigliato: lo studente prova → apre “Suggerimento” → poi “Svolgimento” → confronta con “Soluzione” e “Tabella finale”.
+      L’insegnante può usare le schede per una correzione rapida e ordinata.
+    </p>
+  </div>
+</header>
+
+<main>
+  <div class="tabs" role="tablist" aria-label="Selezione fila">
+    <button class="tab-btn" role="tab" id="tabA" aria-controls="panelA" aria-selected="true">Fila A</button>
+    <button class="tab-btn" role="tab" id="tabB" aria-controls="panelB" aria-selected="false">Fila B</button>
+  </div>
+
+  <!-- =========================
+        FILA A
+  ========================== -->
+  <section class="tab-panel active" id="panelA" role="tabpanel" aria-labelledby="tabA">
+    <div class="card">
+      <h2>Fila A — Strumenti rapidi</h2>
+      <div class="note">
+        <b>Promemoria (radicali):</b>
+        <ul>
+          <li>Per radici di indice <b>pari</b>: radicando $\ge 0$ (condizioni di esistenza).</li>
+          <li>$\sqrt{x^4}=|x^2|=x^2$ (perché $x^2\ge 0$).</li>
+          <li>$\sqrt{x^3}=\sqrt{x^2\cdot x}=|x|\sqrt{x}$ ma se dalle C.E. risulta $x\ge0$, allora $|x|=x$.</li>
+          <li>Razionalizzazione: moltiplica per il <b>coniugato</b> quando hai $\sqrt{a}\pm \sqrt{b}$ al denominatore.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ES 1 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 1 — Vero/Falso</div>
+        <div class="badge">6 affermazioni</div>
+      </div>
+      <div class="ex-text">
+        Valuta V/F e motiva.
+      </div>
+
+      <details>
+        <summary>Suggerimento <span class="pill">come partire</span></summary>
+        <div class="content">
+          <ul>
+            <li>Controlla sempre le <b>C.E.</b> delle radici quadrate: radicando $\ge 0$.</li>
+            <li>Per verificare uguaglianze con radicali, prova a <b>razionalizzare</b> o a semplificare in modo algebrico (non a “intuizione”).</li>
+            <li>Ricorda: in $\mathbb{R}$, $\sqrt{-16}$ <b>non esiste</b>.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">motivazioni</span></summary>
+        <div class="content">
+          <div class="step">
+            <b>1)</b> $\sqrt{2x+3}$ definita $\forall x\in\mathbb{R}$? <br/>
+            Serve $2x+3\ge 0 \Rightarrow x\ge -\frac32$. <br/>
+            Non vale per tutti i reali $\Rightarrow$ <b>F</b>.
+          </div>
+
+          <div class="step">
+            <b>2)</b> $\sqrt[3]{12}\cdot \sqrt[3]{18}$ è irrazionale? <br/>
+            $\sqrt[3]{12}\cdot \sqrt[3]{18}=\sqrt[3]{12\cdot 18}=\sqrt[3]{216}=6$ (razionale). <br/>
+            Quindi l’affermazione “è irrazionale” è <b>F</b>.
+          </div>
+
+          <div class="step">
+            <b>3)</b> $\dfrac1{\sqrt2+1}=\sqrt2-1$? <br/>
+            Razionalizzo: $\dfrac1{\sqrt2+1}\cdot \dfrac{\sqrt2-1}{\sqrt2-1}=\dfrac{\sqrt2-1}{2-1}=\sqrt2-1$. <br/>
+            Quindi <b>V</b>.
+          </div>
+
+          <div class="step">
+            <b>4)</b> $\sqrt{-16}=-4$? <br/>
+            In $\mathbb{R}$ la radice quadrata richiede radicando $\ge 0$. <br/>
+            $-16&lt;0$ quindi non è definita nei reali $\Rightarrow$ <b>F</b>.
+          </div>
+
+          <div class="step">
+            <b>5)</b> $\sqrt[4]{a^2}=\sqrt a$ per ogni $a\in\mathbb{R}$? <br/>
+            $\sqrt[4]{a^2}=(a^2)^{1/4}=|a|^{1/2}=\sqrt{|a|}$. <br/>
+            Non coincide con $\sqrt a$ per ogni reale (anche perché $\sqrt a$ richiede $a\ge 0$). <br/>
+            Quindi <b>F</b>.
+          </div>
+
+          <div class="step">
+            <b>6)</b> $\sqrt4+\sqrt7=\sqrt{11}$? <br/>
+            $\sqrt4=2$, quindi LHS $=2+\sqrt7$. <br/>
+            In generale $\sqrt a+\sqrt b\neq \sqrt{a+b}$ (a meno di casi particolari). <br/>
+            Qui non può essere vera $\Rightarrow$ <b>F</b>.
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Soluzione <span class="pill">V/F</span></summary>
+        <div class="content">
+          <b>Risposte:</b> 1) F, 2) F, 3) V, 4) F, 5) F, 6) F.
+        </div>
+      </details>
+
+      <details>
+        <summary>Errori comuni <span class="pill">da evitare</span></summary>
+        <div class="content">
+          <div class="warn">
+            <ul>
+              <li>Scrivere “definita per ogni $x$” senza controllare $2x+3\ge 0$.</li>
+              <li>Dimenticare che $\sqrt[3]{a}\sqrt[3]{b}=\sqrt[3]{ab}$ (utile per semplificare).</li>
+              <li>Confondere $\sqrt{-16}$ nei reali (non esiste) con calcoli in complessi.</li>
+              <li>Credere che $\sqrt a+\sqrt b=\sqrt{a+b}$ (falso in generale).</li>
+              <li>Ignorare il valore assoluto quando si estrae da radici di indice pari.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Teoria essenziale <span class="pill">radici e C.E.</span></summary>
+        <div class="content">
+          <div class="theory">
+            <ul>
+              <li>Radice quadrata: $\sqrt{f(x)}$ esiste in $\mathbb{R}$ se e solo se $f(x)\ge 0$.</li>
+              <li>$\sqrt{a^2}=|a|$ (attenzione al valore assoluto).</li>
+              <li>Razionalizzazione: $\dfrac{1}{\sqrt{m}+n}$ si risolve moltiplicando per $\sqrt{m}-n$.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ES 2 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 2 — Stesso indice e ordinamento</div>
+        <div class="badge">$\sqrt7;\ \sqrt[3]{2};\ \sqrt[6]{6}$</div>
+      </div>
+
+      <details>
+        <summary>Suggerimento <span class="pill">idea</span></summary>
+        <div class="content">
+          Porta tutto allo stesso indice usando il <b>m.c.m.</b> degli indici (qui 2, 3, 6 → m.c.m. = 6), poi confronta i radicandi.
+        </div>
+      </details>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">confronto</span></summary>
+        <div class="content">
+          <div class="step">
+            m.c.m.$(2,3,6)=6$. Riscrivo:
+            <ul>
+              <li>$\sqrt7=\sqrt[6]{7^3}=\sqrt[6]{343}$</li>
+              <li>$\sqrt[3]{2}=\sqrt[6]{2^2}=\sqrt[6]{4}$</li>
+              <li>$\sqrt[6]{6}$ è già a indice 6</li>
+            </ul>
+            Ora, con stesso indice, confronto i radicandi: $4&lt;6&lt;343$.
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Soluzione <span class="pill">ordine crescente</span></summary>
+        <div class="content">
+          $$\sqrt[3]{2}\lt \sqrt[6]{6}\lt \sqrt7.$$
+        </div>
+      </details>
+
+      <details>
+        <summary>Errori comuni <span class="pill">attenzione</span></summary>
+        <div class="content">
+          <div class="warn">
+            <ul>
+              <li>Confrontare “a occhio” senza portare allo stesso indice.</li>
+              <li>Dimenticare che per stesso indice $n$, $\sqrt[n]{A}&lt;\sqrt[n]{B}$ se e solo se $A&lt;B$ (con $A,B&gt;0$).</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Teoria essenziale <span class="pill">riduzione d’indice</span></summary>
+        <div class="content">
+          <div class="theory">
+            Regola: $\sqrt[m]{a}=\sqrt[\ell]{a^{\ell/m}}$ se $\ell$ è multiplo di $m$.  
+            In pratica: scegli $\ell=\mathrm{mcm}$ degli indici e riscrivi ogni radice con indice $\ell$.
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ES 3 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 3 — Trasporta fuori e C.E.</div>
+        <div class="badge">a) $\sqrt{x^3(y^2+1)}$ — b) $\dfrac{\sqrt{x^4(3-x)}}{\sqrt[6]{x^2+4}}$</div>
+      </div>
+
+      <details>
+        <summary>Suggerimento <span class="pill">tecnica</span></summary>
+        <div class="content">
+          Scomponi il radicando in “quadrati perfetti” (o potenze pari) e “resto”. Poi imponi le C.E. (indice pari → radicando $\ge 0$).
+        </div>
+      </details>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">a e b</span></summary>
+        <div class="content">
+          <div class="step">
+            <b>a)</b> $\sqrt{x^3(y^2+1)}=\sqrt{x^2\cdot x\cdot (y^2+1)}=\sqrt{x^2}\,\sqrt{x(y^2+1)}=|x|\sqrt{x(y^2+1)}$.<br/>
+            <b>C.E.</b>: $x^3(y^2+1)\ge 0$. Poiché $y^2+1&gt;0$ sempre, serve $x^3\ge 0 \Rightarrow x\ge 0$.<br/>
+            Con $x\ge 0$, $|x|=x$ quindi:
+            $$\sqrt{x^3(y^2+1)}=x\sqrt{x(y^2+1)},\quad \text{C.E. } x\ge 0.$$
+          </div>
+
+          <div class="step">
+            <b>b)</b> $\sqrt{x^4(3-x)}=\sqrt{x^4}\,\sqrt{3-x}=x^2\sqrt{3-x}$ (perché $x^2\ge 0$).<br/>
+            Denominatore: $\sqrt[6]{x^2+4}$ è sempre definita perché $x^2+4&gt;0$ per ogni $x$.<br/>
+            <b>C.E.</b> dalla radice quadrata in alto: $x^4(3-x)\ge 0$. Siccome $x^4\ge 0$, serve $3-x\ge 0 \Rightarrow x\le 3$.<br/>
+            Quindi:
+            $$\frac{\sqrt{x^4(3-x)}}{\sqrt[6]{x^2+4}}=\frac{x^2\sqrt{3-x}}{\sqrt[6]{x^2+4}},\quad \text{C.E. } x\le 3.$$
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Soluzione <span class="pill">risultati</span></summary>
+        <div class="content">
+          <ul>
+            <li>a) $\boxed{\sqrt{x^3(y^2+1)}=x\sqrt{x(y^2+1)},\ \text{C.E. } x\ge 0}$</li>
+            <li>b) $\boxed{\dfrac{\sqrt{x^4(3-x)}}{\sqrt[6]{x^2+4}}=\dfrac{x^2\sqrt{3-x}}{\sqrt[6]{x^2+4}},\ \text{C.E. } x\le 3}$</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Errori comuni <span class="pill">tipici</span></summary>
+        <div class="content">
+          <div class="warn">
+            <ul>
+              <li>In a) estrarre $x$ senza aver prima concluso che $x\ge 0$ (si rischia di perdere il valore assoluto).</li>
+              <li>In b) pensare che serva C.E. per $\sqrt[6]{x^2+4$}: in realtà $x^2+4&gt;0$ sempre.</li>
+              <li>Confondere $\sqrt{x^4}=x^2$ con $\sqrt{x^2}=|x|$.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Teoria essenziale <span class="pill">estrazioni</span></summary>
+        <div class="content">
+          <div class="theory">
+            <ul>
+              <li>$\sqrt{u^2}=|u|$; invece $\sqrt{u^4}=u^2$.</li>
+              <li>Per $\sqrt{A\cdot B}$ (con $A,B\ge 0$): $\sqrt{AB}=\sqrt A\,\sqrt B$.</li>
+              <li>Radice pari: C.E. = radicando $\ge 0$.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ES 4 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 4 — Razionalizza (scelta)</div>
+        <div class="badge">assumi radicandi positivi</div>
+      </div>
+
+      <div class="ex-text">
+        a) $\dfrac{x\sqrt{y}+y\sqrt{x}}{3(\sqrt{x}+\sqrt{y})}$ <span class="small">oppure</span> $\dfrac{a-2}{\sqrt{a-2}}$ <br/>
+        b) $\dfrac{\sqrt5}{\sqrt2+x}$ <span class="small">oppure</span> $\dfrac{a-2}{\sqrt{a-2}}$
+      </div>
+
+      <details>
+        <summary>Suggerimento <span class="pill">due strade</span></summary>
+        <div class="content">
+          <ul>
+            <li>Se puoi <b>semplificare prima</b> (fattorizzando), spesso la razionalizzazione diventa immediata.</li>
+            <li>Se il denominatore è $\sqrt{m}\pm n$, moltiplica per il <b>coniugato</b> $\sqrt{m}\mp n$.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">a e b</span></summary>
+        <div class="content">
+          <div class="step">
+            <b>4a - prima frazione</b><br/>
+            $x\sqrt y + y\sqrt x = \sqrt x\sqrt y(\sqrt x+\sqrt y)$ (fattorizzo $\sqrt x\sqrt y$).<br/>
+            Quindi
+            $$\frac{x\sqrt y + y\sqrt x}{3(\sqrt x+\sqrt y)}=\frac{\sqrt x\sqrt y(\sqrt x+\sqrt y)}{3(\sqrt x+\sqrt y)}=\frac{\sqrt{xy}}{3}.$$
+          </div>
+
+          <div class="step">
+            <b>4a - seconda frazione</b><br/>
+            $$\frac{a-2}{\sqrt{a-2}}\cdot\frac{\sqrt{a-2}}{\sqrt{a-2}}=\frac{(a-2)\sqrt{a-2}}{a-2}=\sqrt{a-2}.$$
+            (Serve $a-2&gt;0$ per non avere denominatore nullo.)
+          </div>
+
+          <div class="step">
+            <b>4b - prima frazione</b><br/>
+            $$\frac{\sqrt5}{\sqrt2+x}\cdot\frac{\sqrt2-x}{\sqrt2-x}=
+              \frac{\sqrt5(\sqrt2-x)}{(\sqrt2)^2-x^2}=\frac{\sqrt5(\sqrt2-x)}{2-x^2}.$$
+          </div>
+
+          <div class="step">
+            <b>4b - seconda frazione</b><br/>
+            Come sopra: $\dfrac{a-2}{\sqrt{a-2}}=\sqrt{a-2}$ (con $a-2&gt;0$).
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Soluzione <span class="pill">risultati</span></summary>
+        <div class="content">
+          <ul>
+            <li>$\boxed{\dfrac{x\sqrt{y}+y\sqrt{x}}{3(\sqrt{x}+\sqrt{y})}=\dfrac{\sqrt{xy}}{3}}$</li>
+            <li>$\boxed{\dfrac{a-2}{\sqrt{a-2}}=\sqrt{a-2}}\quad (a&gt;2)$</li>
+            <li>$\boxed{\dfrac{\sqrt5}{\sqrt2+x}=\dfrac{\sqrt5(\sqrt2-x)}{2-x^2}}$</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Errori comuni <span class="pill">classici</span></summary>
+        <div class="content">
+          <div class="warn">
+            <ul>
+              <li>Dimenticare di provare a <b>fattorizzare</b> (qui si semplifica subito $\sqrt x+\sqrt y$).</li>
+              <li>Moltiplicare per un “coniugato sbagliato”.</li>
+              <li>Dimenticare che $(\sqrt2+x)(\sqrt2-x)=2-x^2$ (differenza di quadrati).</li>
+              <li>Trascurare che $\frac{a-2}{\sqrt{a-2}}$ richiede $a&gt;2$ (non basta $a\ge 2$ perché il denominatore non può essere 0).</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Teoria essenziale <span class="pill">coniugato</span></summary>
+        <div class="content">
+          <div class="theory">
+            $(u+v)(u-v)=u^2-v^2$.  
+            Se al denominatore hai $\sqrt{m}\pm n$, il coniugato elimina la radice perché $(\sqrt{m})^2=m$.
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ES 5 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 5 — Semplifica (scelta) + C.E.</div>
+        <div class="badge">scegline una</div>
+      </div>
+
+      <div class="ex-text">
+        1) $\sqrt[3]{\dfrac{1}{x^2}-\dfrac{4}{x^3}+\dfrac{4}{x^4}}$ <br/>
+        2) $2(\sqrt a-2\sqrt b)+\sqrt[4]{a^2}-\sqrt{9b}-\dfrac12\sqrt{36a}$ <br/>
+        3) $\dfrac{x}{\sqrt2+3}+\dfrac{x}{\sqrt2-3}=\sqrt8$
+      </div>
+
+      <details>
+        <summary>Suggerimento <span class="pill">strategie</span></summary>
+        <div class="content">
+          <ul>
+            <li>1) Metti a denominatore comune e cerca un <b>quadrato perfetto</b>.</li>
+            <li>2) Riduci ogni radicale: $\sqrt{9b}=3\sqrt b$, $\sqrt{36a}=6\sqrt a$, $\sqrt[4]{a^2}=\sqrt a$ se $a\ge 0$.</li>
+            <li>3) Somma le frazioni con denominatore comune (oppure razionalizza i denominatori).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">1, 2, 3</span></summary>
+        <div class="content">
+          <div class="step">
+            <b>5.1)</b> $\sqrt[3]{\dfrac{1}{x^2}-\dfrac{4}{x^3}+\dfrac{4}{x^4}}$<br/>
+            <b>C.E.</b>: serve $x\neq 0$ (perché ci sono denominatori con $x$).<br/>
+            Metto a denominatore $x^4$:
+            $$\frac{1}{x^2}-\frac{4}{x^3}+\frac{4}{x^4}=\frac{x^2-4x+4}{x^4}=\frac{(x-2)^2}{x^4}.$$
+            Quindi
+            $$\sqrt[3]{\frac{(x-2)^2}{x^4}}=\frac{\sqrt[3]{(x-2)^2}}{\sqrt[3]{x^4}}=\frac{\sqrt[3]{(x-2)^2}}{x\sqrt[3]{x}}.$$
+          </div>
+
+          <div class="step">
+            <b>5.2)</b> $2(\sqrt a-2\sqrt b)+\sqrt[4]{a^2}-\sqrt{9b}-\dfrac12\sqrt{36a}$<br/>
+            <b>C.E.</b> (nei reali): $a\ge 0,\ b\ge 0$.<br/>
+            Semplifico i radicali:
+            $$2(\sqrt a-2\sqrt b)=2\sqrt a-4\sqrt b,$$
+            $$\sqrt[4]{a^2}=\sqrt a \quad (\text{se }a\ge0),\qquad \sqrt{9b}=3\sqrt b,\qquad \frac12\sqrt{36a}=\frac12\cdot 6\sqrt a=3\sqrt a.$$
+            Metto insieme:
+            $$(2\sqrt a-4\sqrt b)+\sqrt a-3\sqrt b-3\sqrt a = -7\sqrt b.$$
+          </div>
+
+          <div class="step">
+            <b>5.3)</b> $\dfrac{x}{\sqrt2+3}+\dfrac{x}{\sqrt2-3}=\sqrt8$<br/>
+            Denominatore comune: $(\sqrt2+3)(\sqrt2-3)=2-9=-7$.<br/>
+            Numeratore:
+            $$x(\sqrt2-3)+x(\sqrt2+3)=x(2\sqrt2).$$
+            Quindi LHS:
+            $$\frac{2\sqrt2\,x}{-7}=-\frac{2\sqrt2}{7}x.$$
+            RHS: $\sqrt8=2\sqrt2$. Allora
+            $$-\frac{2\sqrt2}{7}x=2\sqrt2 \Rightarrow -\frac{x}{7}=1 \Rightarrow x=-7.$$
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Soluzione <span class="pill">risultati</span></summary>
+        <div class="content">
+          <ul>
+            <li>5.1) $\boxed{\dfrac{\sqrt[3]{(x-2)^2}}{x\sqrt[3]{x}}}$ con C.E. $\boxed{x\neq 0}$</li>
+            <li>5.2) $\boxed{-7\sqrt b}$ con C.E. $\boxed{a\ge0,\ b\ge0}$</li>
+            <li>5.3) $\boxed{x=-7}$</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Errori comuni <span class="pill">occhio</span></summary>
+        <div class="content">
+          <div class="warn">
+            <ul>
+              <li>5.1) dimenticare $x\neq0$; oppure non riconoscere $x^2-4x+4=(x-2)^2$.</li>
+              <li>5.2) sbagliare $\sqrt{36a}=6\sqrt a$ e quindi $\frac12\sqrt{36a}=3\sqrt a$.</li>
+              <li>5.2) trattare $\sqrt[4]{a^2}$ come $|a|$ (qui, con $a\ge0$, diventa $\sqrt a$).</li>
+              <li>5.3) sbagliare $(\sqrt2+3)(\sqrt2-3)=2-9=-7$ (segno!).</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Teoria essenziale <span class="pill">semplificazioni</span></summary>
+        <div class="content">
+          <div class="theory">
+            <ul>
+              <li>$\sqrt{km}= \sqrt{k}\sqrt{m}$ (se $k,m\ge0$).</li>
+              <li>$\sqrt{c^2}=|c|$; con $c\ge0$ allora $\sqrt{c^2}=c$.</li>
+              <li>Radici con indice dispari: nessuna C.E. sul segno del radicando, ma attenzione ai denominatori.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- BONUS -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Bonus — Geometria con radicali</div>
+        <div class="badge">area 50 cm²</div>
+      </div>
+
+      <div class="ex-text">
+        Quadrato di area $50\,\text{cm}^2$: lato $l$. Rettangolo con lati $\frac{\sqrt6}{5}l$ e $\frac{\sqrt{10}}{5}l$.
+        Trova area $A$ e perimetro $2p$.
+      </div>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">calcolo</span></summary>
+        <div class="content">
+          <div class="step">
+            Area quadrato $=l^2=50 \Rightarrow l=\sqrt{50}=5\sqrt2$.<br/><br/>
+            Lati rettangolo:
+            $$\frac{\sqrt6}{5}l=\frac{\sqrt6}{5}\cdot 5\sqrt2=\sqrt{12}=2\sqrt3,$$
+            $$\frac{\sqrt{10}}{5}l=\frac{\sqrt{10}}{5}\cdot 5\sqrt2=\sqrt{20}=2\sqrt5.$$
+            Area:
+            $$A=(2\sqrt3)(2\sqrt5)=4\sqrt{15}.$$
+            Perimetro:
+            $$2p=2\big(2\sqrt3+2\sqrt5\big)=4(\sqrt3+\sqrt5).$$
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Soluzione <span class="pill">A e 2p</span></summary>
+        <div class="content">
+          $$\boxed{A=4\sqrt{15}\ \text{cm}^2}\qquad \boxed{2p=4(\sqrt3+\sqrt5)\ \text{cm}}$$
+        </div>
+      </details>
+    </div>
+
+    <!-- TABELLA FINALE FILA A -->
+    <div class="card">
+      <h2>Fila A — Tabella finale “Esercizio → Risultato”</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:28%">Esercizio</th>
+            <th>Risultato (controllo rapido)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>1</b> (V/F)</td>
+            <td>1) F, 2) F, 3) V, 4) F, 5) F, 6) F</td>
+          </tr>
+          <tr>
+            <td><b>2</b> (ordine)</td>
+            <td>$\sqrt[3]{2}\lt \sqrt[6]{6}\lt \sqrt7$</td>
+          </tr>
+          <tr>
+            <td><b>3a</b></td>
+            <td>$x\sqrt{x(y^2+1)}$, C.E. $x\ge 0$</td>
+          </tr>
+          <tr>
+            <td><b>3b</b></td>
+            <td>$\dfrac{x^2\sqrt{3-x}}{\sqrt[6]{x^2+4}}$, C.E. $x\le 3$</td>
+          </tr>
+          <tr>
+            <td><b>4a</b> (opz. 1)</td>
+            <td>$\dfrac{\sqrt{xy}}{3}$</td>
+          </tr>
+          <tr>
+            <td><b>4a</b> (opz. 2)</td>
+            <td>$\sqrt{a-2}$ (con $a&gt;2$)</td>
+          </tr>
+          <tr>
+            <td><b>4b</b> (opz. 1)</td>
+            <td>$\dfrac{\sqrt5(\sqrt2-x)}{2-x^2}$</td>
+          </tr>
+          <tr>
+            <td><b>4b</b> (opz. 2)</td>
+            <td>$\sqrt{a-2}$ (con $a&gt;2$)</td>
+          </tr>
+          <tr>
+            <td><b>5.1</b></td>
+            <td>$\dfrac{\sqrt[3]{(x-2)^2}}{x\sqrt[3]{x}}$, C.E. $x\neq 0$</td>
+          </tr>
+          <tr>
+            <td><b>5.2</b></td>
+            <td>$-7\sqrt b$, C.E. $a\ge0,\ b\ge0$</td>
+          </tr>
+          <tr>
+            <td><b>5.3</b></td>
+            <td>$x=-7$</td>
+          </tr>
+          <tr>
+            <td><b>Bonus</b></td>
+            <td>$A=4\sqrt{15}$, $2p=4(\sqrt3+\sqrt5)$</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small" style="margin:10px 2px 0;">
+        Nota: negli esercizi “a scelta” ho riportato <b>tutte</b> le possibili soluzioni per facilitare l’autovalutazione.
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================
+        FILA B
+  ========================== -->
+  <section class="tab-panel" id="panelB" role="tabpanel" aria-labelledby="tabB">
+    <div class="card">
+      <h2>Fila B — Strumenti rapidi</h2>
+      <div class="note">
+        <b>Promemoria (uguale alla fila A):</b>
+        <ul>
+          <li>Radice di indice pari: radicando $\ge 0$.</li>
+          <li>Prodotto di radicali con stesso indice: $\sqrt[n]{a}\sqrt[n]{b}=\sqrt[n]{ab}$.</li>
+          <li>Coniugato: $(u+v)(u-v)=u^2-v^2$.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ES 1 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 1 — Vero/Falso</div>
+        <div class="badge">6 affermazioni</div>
+      </div>
+
+      <details>
+        <summary>Svolgimento + Soluzione <span class="pill">V/F motivati</span></summary>
+        <div class="content">
+          <div class="step">
+            <b>1)</b> $\sqrt{3a+2}$ definita $\forall a\in\mathbb{R}$? Serve $3a+2\ge 0\Rightarrow a\ge -\frac23$. Quindi <b>F</b>.
+          </div>
+          <div class="step">
+            <b>2)</b> $\sqrt[3]{36}\cdot \sqrt[3]{6}=\sqrt[3]{216}=6$ (razionale) ⇒ “irrazionale” è <b>F</b>.
+          </div>
+          <div class="step">
+            <b>3)</b> $\dfrac{2}{\sqrt3+1}$: razionalizzo
+            $$\frac{2}{\sqrt3+1}\cdot\frac{\sqrt3-1}{\sqrt3-1}=\frac{2(\sqrt3-1)}{3-1}=\sqrt3-1,$$
+            quindi <b>V</b>.
+          </div>
+          <div class="step">
+            <b>4)</b> $\sqrt{-25}=-5$? Nei reali non è definita ⇒ <b>F</b>.
+          </div>
+          <div class="step">
+            <b>5)</b> $\sqrt[4]{x^2}=\sqrt x$ per ogni $x\in\mathbb{R}$? A sinistra $\sqrt[4]{x^2}=\sqrt{|x|}$, a destra serve $x\ge 0$. Non vale per ogni reale ⇒ <b>F</b>.
+          </div>
+          <div class="step">
+            <b>6)</b> $\sqrt5+\sqrt8=\sqrt{13}$? $\sqrt8=2\sqrt2$, non si sommano sotto radice ⇒ <b>F</b>.
+          </div>
+          <div class="warn">
+            <b>Risposte:</b> 1) F, 2) F, 3) V, 4) F, 5) F, 6) F.
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ES 2 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 2 — Stesso indice e ordinamento</div>
+        <div class="badge">$\sqrt7;\ \sqrt[3]{2};\ \sqrt[4]{6}$</div>
+      </div>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">m.c.m.</span></summary>
+        <div class="content">
+          <div class="step">
+            Indici: 2, 3, 4 → m.c.m. = 12.<br/>
+            Riscrivo:
+            <ul>
+              <li>$\sqrt7=\sqrt[12]{7^6}$</li>
+              <li>$\sqrt[3]{2}=\sqrt[12]{2^4}=\sqrt[12]{16}$</li>
+              <li>$\sqrt[4]{6}=\sqrt[12]{6^3}=\sqrt[12]{216}$</li>
+            </ul>
+            Confronto radicandi: $16&lt;216&lt;7^6(=117649)$.
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Soluzione <span class="pill">ordine crescente</span></summary>
+        <div class="content">
+          $$\boxed{\sqrt[3]{2}\lt \sqrt[4]{6}\lt \sqrt7}.$$
+        </div>
+      </details>
+
+      <details>
+        <summary>Errori comuni <span class="pill">attenzione</span></summary>
+        <div class="content">
+          <div class="warn">
+            <ul>
+              <li>Portare allo stesso indice usando 6 (non è multiplo di 4), serve 12.</li>
+              <li>Confrontare numeri con indici diversi senza uniformare.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ES 3 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 3 — Trasporta fuori e C.E.</div>
+        <div class="badge">a) $\sqrt{x^5(z^2+1)}$ — b) $\dfrac{\sqrt{x^4(3-x)}}{\sqrt[6]{x^2+4}}$</div>
+      </div>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">a e b</span></summary>
+        <div class="content">
+          <div class="step">
+            <b>a)</b> $\sqrt{x^5(z^2+1)}=\sqrt{x^4\cdot x\cdot (z^2+1)}=\sqrt{x^4}\,\sqrt{x(z^2+1)}=x^2\sqrt{x(z^2+1)}$.<br/>
+            <b>C.E.</b>: $x^5(z^2+1)\ge 0$. Poiché $z^2+1&gt;0$, serve $x^5\ge 0 \Rightarrow x\ge 0$.<br/>
+            Quindi $\boxed{x^2\sqrt{x(z^2+1)}}$ con C.E. $\boxed{x\ge 0}$.
+          </div>
+
+          <div class="step">
+            <b>b)</b> come in Fila A:
+            $$\sqrt{x^4(3-x)}=x^2\sqrt{3-x},\quad \text{C.E. } 3-x\ge 0\Rightarrow x\le 3.$$
+            Il denominatore $\sqrt[6]{x^2+4}$ è sempre definito. Quindi
+            $$\boxed{\frac{x^2\sqrt{3-x}}{\sqrt[6]{x^2+4}}}\quad \text{con C.E. }\boxed{x\le 3}.$$
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Errori comuni <span class="pill">tipici</span></summary>
+        <div class="content">
+          <div class="warn">
+            <ul>
+              <li>In a) scrivere $|x^2|$ (non serve: $x^2\ge 0$ sempre).</li>
+              <li>In a) dimenticare la C.E. $x\ge 0$ (radice quadrata).</li>
+              <li>In b) trascurare che la condizione viene solo da $\sqrt{3-x}$ → $x\le 3$.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ES 4 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 4 — Razionalizza (scelta)</div>
+        <div class="badge">radicandi positivi</div>
+      </div>
+
+      <div class="ex-text">
+        a) $\dfrac{x\sqrt y-y\sqrt x}{3(\sqrt x-\sqrt y)}$ <span class="small">oppure</span> $\dfrac{a+3}{\sqrt{a+3}}$ <br/>
+        b) $\dfrac{\sqrt3}{\sqrt2-x}$ <span class="small">oppure</span> $\dfrac{a+3}{\sqrt{a+3}}$
+      </div>
+
+      <details>
+        <summary>Svolgimento passo-passo <span class="pill">a e b</span></summary>
+        <div class="content">
+          <div class="step">
+            <b>4a - prima frazione</b><br/>
+            $x\sqrt y-y\sqrt x=\sqrt x\sqrt y(\sqrt x-\sqrt y)$. Quindi
+            $$\frac{x\sqrt y-y\sqrt x}{3(\sqrt x-\sqrt y)}=\frac{\sqrt x\sqrt y}{3}=\frac{\sqrt{xy}}{3}.$$
+            (Qui serve $\sqrt x-\sqrt y\ne 0$, cioè $x\ne y$, per non avere denominatore nullo.)
+          </div>
+
+          <div class="step">
+            <b>4a - seconda frazione</b><br/>
+            $$\frac{a+3}{\sqrt{a+3}}=\sqrt{a+3}\quad (\text{con }a+3&gt;0).$$
+          </div>
+
+          <div class="step">
+            <b>4b - prima frazione</b><br/>
+            Coniugato:
+            $$\frac{\sqrt3}{\sqrt2-x}\cdot\frac{\sqrt2+x}{\sqrt2+x}=
+              \frac{\sqrt3(\sqrt2+x)}{2-x^2}.$$
+          </div>
+
+          <div class="step">
+            <b>4b - seconda frazione</b><br/>
+            Come sopra: $\dfrac{a+3}{\sqrt{a+3}}=\sqrt{a+3}$ con $a&gt;-3$.
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Errori comuni <span class="pill">attenzione</span></summary>
+        <div class="content">
+          <div class="warn">
+            <ul>
+              <li>Dimenticare di semplificare $\sqrt x-\sqrt y$ quando compare anche al numeratore.</li>
+              <li>Sbagliare il coniugato: di $\sqrt2-x$ il coniugato è $\sqrt2+x$.</li>
+              <li>Non controllare il denominatore: $\sqrt x-\sqrt y=0$ se $x=y$.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ES 5 -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Esercizio 5 — Semplifica (scelta) + C.E.</div>
+        <div class="badge">identico alla Fila A</div>
+      </div>
+
+      <details>
+        <summary>Soluzioni (tutte) <span class="pill">risultati</span></summary>
+        <div class="content">
+          <ul>
+            <li>5.1) $\dfrac{\sqrt[3]{(x-2)^2}}{x\sqrt[3]{x}}$, C.E. $x\neq 0$</li>
+            <li>5.2) $-7\sqrt b$, C.E. $a\ge0,\ b\ge0$</li>
+            <li>5.3) $x=-7$</li>
+          </ul>
+          <p class="small">Nota: i passaggi dettagliati sono nella scheda Fila A (gli esercizi sono uguali).</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- BONUS -->
+    <div class="ex">
+      <div class="ex-head">
+        <div class="ex-title">Bonus — Geometria con radicali</div>
+        <div class="badge">identico alla Fila A</div>
+      </div>
+      <details>
+        <summary>Soluzione <span class="pill">A e 2p</span></summary>
+        <div class="content">
+          $$\boxed{A=4\sqrt{15}\ \text{cm}^2}\qquad \boxed{2p=4(\sqrt3+\sqrt5)\ \text{cm}}$$
+        </div>
+      </details>
+    </div>
+
+    <!-- TABELLA FINALE FILA B -->
+    <div class="card">
+      <h2>Fila B — Tabella finale “Esercizio → Risultato”</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:28%">Esercizio</th>
+            <th>Risultato (controllo rapido)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>1</b> (V/F)</td>
+            <td>1) F, 2) F, 3) V, 4) F, 5) F, 6) F</td>
+          </tr>
+          <tr>
+            <td><b>2</b> (ordine)</td>
+            <td>$\sqrt[3]{2}\lt \sqrt[4]{6}\lt \sqrt7$</td>
+          </tr>
+          <tr>
+            <td><b>3a</b></td>
+            <td>$x^2\sqrt{x(z^2+1)}$, C.E. $x\ge 0$</td>
+          </tr>
+          <tr>
+            <td><b>3b</b></td>
+            <td>$\dfrac{x^2\sqrt{3-x}}{\sqrt[6]{x^2+4}}$, C.E. $x\le 3$</td>
+          </tr>
+          <tr>
+            <td><b>4a</b> (opz. 1)</td>
+            <td>$\dfrac{\sqrt{xy}}{3}$ (con $x\ne y$)</td>
+          </tr>
+          <tr>
+            <td><b>4a</b> (opz. 2)</td>
+            <td>$\sqrt{a+3}$ (con $a&gt;-3$)</td>
+          </tr>
+          <tr>
+            <td><b>4b</b> (opz. 1)</td>
+            <td>$\dfrac{\sqrt3(\sqrt2+x)}{2-x^2}$</td>
+          </tr>
+          <tr>
+            <td><b>4b</b> (opz. 2)</td>
+            <td>$\sqrt{a+3}$ (con $a&gt;-3$)</td>
+          </tr>
+          <tr>
+            <td><b>5.1</b></td>
+            <td>$\dfrac{\sqrt[3]{(x-2)^2}}{x\sqrt[3]{x}}$, C.E. $x\neq 0$</td>
+          </tr>
+          <tr>
+            <td><b>5.2</b></td>
+            <td>$-7\sqrt b$, C.E. $a\ge0,\ b\ge0$</td>
+          </tr>
+          <tr>
+            <td><b>5.3</b></td>
+            <td>$x=-7$</td>
+          </tr>
+          <tr>
+            <td><b>Bonus</b></td>
+            <td>$A=4\sqrt{15}$, $2p=4(\sqrt3+\sqrt5)$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Suggerimento didattico: fai aprire agli studenti prima solo “Suggerimento”, poi “Svolgimento”.  
+  Alla fine: confronto con “Tabella finale” per un check immediato.
+</footer>
+
+<script>
+  // Tab logic (no librerie)
+  const tabA = document.getElementById('tabA');
+  const tabB = document.getElementById('tabB');
+  const panelA = document.getElementById('panelA');
+  const panelB = document.getElementById('panelB');
+
+  function activate(which){
+    const isA = which === 'A';
+    tabA.setAttribute('aria-selected', isA ? 'true' : 'false');
+    tabB.setAttribute('aria-selected', !isA ? 'true' : 'false');
+    panelA.classList.toggle('active', isA);
+    panelB.classList.toggle('active', !isA);
+
+    // Re-render MathJax on tab change (to avoid layout glitches)
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+  }
+
+  tabA.addEventListener('click', () => activate('A'));
+  tabB.addEventListener('click', () => activate('B'));
+</script>
+</body>
+</html>
